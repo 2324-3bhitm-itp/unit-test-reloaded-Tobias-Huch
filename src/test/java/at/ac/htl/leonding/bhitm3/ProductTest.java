@@ -27,11 +27,28 @@ public class ProductTest {
 	}
 
 	@Test
+	public void restockFailsForNonPositiv() {
+		Product product = new Product(15, 10, "none");
+		int amount = -5;
+		product.restock(amount);
+		assertEquals(product.getQuantity(), 0);
+	}
+
+	@Test
 	public void given_product_when_selling_and_amount_greater_zero_amount_should_be_removed_from_quantity() {
 		Product product = new Product(15, 10, "none");
 		int amount = 5;
 		product.restock(amount);
 		product.sell(3);
 		assertEquals(product.getQuantity(), 2);
+	}
+
+	@Test
+	public void sellFailsForNonPositiv() {
+		Product product = new Product(15, 10, "none");
+		int amount = 5;
+		product.restock(amount);
+		product.sell(-2);
+		assertEquals(5, product.getQuantity());
 	}
 }
